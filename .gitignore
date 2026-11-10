@@ -1,7 +1,7 @@
-  __pycache__/
-  *.pyc
-  .venv/
-  venv/
-  .DS_Store
-  __MACOSX/
-  .ipynb_checkpoints/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+__MACOSX/
+.ipynb_checkpoints/
