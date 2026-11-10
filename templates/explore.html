@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Explore · Tourism Insights{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Explore</h1>
+  <p>Where in Europe do short-term rental guests stay? Choose countries or regions, an indicator and a period. Hover over the map for details, click a name in the ranking to find it on the map.</p>
+</div>
+
+<div class="card">
+  <div class="controls">
+    <div class="control">
+      <span class="label">Level</span>
+      <div class="segmented" id="level">
+        <button data-value="0" class="active">Countries</button>
+        <button data-value="2">Regions</button>
+      </div>
+    </div>
+    <div class="control">
+      <label for="indicator">Indicator</label>
+      <select id="indicator">
+        {% for key, ind in indicators.items() %}<option value="{{ key }}">{{ ind.label }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="control">
+      <label for="resid">Guests</label>
+      <select id="resid">
+        {% for key, label in residence.items() %}<option value="{{ key }}">{{ label }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="control">
+      <label for="year">Year</label>
+      <select id="year">
+        {% for y in years|reverse %}<option value="{{ y }}">{{ y }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="control">
+      <label for="month">Month</label>
+      <select id="month">
+        <option value="0">Whole year</option>
+        {% for m in months %}<option value="{{ loop.index }}">{{ m }}</option>{% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="hint" id="indicator-help"></div>
+</div>
+
+<div class="explore-layout">
+  <div class="card map-card">
+    <div id="map"></div>
+    <div class="map-status" id="map-status"></div>
+  </div>
+  <div class="card ranking">
+    <h2 id="ranking-title">Top 10</h2>
+    <div class="muted small" id="ranking-sub"></div>
+    <ol id="ranking"></ol>
+    <p class="muted small" style="margin-top:10px">Regions are NUTS 2 regions (e.g. Oberbayern, Andalucía). Grey areas: no data.</p>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>const INDICATORS = {{ indicators|tojson }}; const MONTHS = {{ months|tojson }};</script>
+<script src="{{ asset('js/explore.js') }}"></script>
+{% endblock %}

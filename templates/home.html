@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>How short-term rentals shape European tourism</h1>
+  <p>Tourism Insights explores {{ facts.first_year }}–{{ facts.last_year }} Eurostat data on stays booked via Airbnb, Booking.com, Expedia and Tripadvisor across {{ facts.countries }} European countries and {{ facts.regions }} regions – and tests whether this data, combined with socio-economic indicators, can predict changes in housing prices.</p>
+  <div class="actions">
+    <a class="btn" href="{{ url_for('explore') }}">Explore the map</a>
+    <a class="btn secondary" href="{{ url_for('model') }}">See the price model</a>
+  </div>
+</section>
+
+<section class="section grid-3">
+  <div class="card feature">
+    <div class="tag">Explore</div>
+    <h2>Where do people stay?</h2>
+    <p>Compare countries and regions on an interactive map with a live Top 10 ranking – by stays, nights, guest nights or average length of stay, for any year or month, and for domestic or foreign guests.</p>
+    <a href="{{ url_for('explore') }}">Open the map →</a>
+  </div>
+  <div class="card feature">
+    <div class="tag">Country Insights</div>
+    <h2>When and where within a country?</h2>
+    <p>Pick a country to see its key figures, a month-by-region heatmap that reveals seasonality, and how its three biggest regions develop over the year.</p>
+    <a href="{{ url_for('country') }}">Analyse a country →</a>
+  </div>
+  <div class="card feature">
+    <div class="tag">Machine learning</div>
+    <h2>Does tourism predict housing prices?</h2>
+    <p>Four regression models – linear, Lasso, random forest and support vector regression – are trained and compared with cross-validation, then the best model is tested on unseen data.</p>
+    <a href="{{ url_for('model') }}">Run the models →</a>
+  </div>
+</section>
+
+<section class="section card">
+  <div class="facts">
+    <div class="fact"><div class="num">{{ facts.countries }}</div><div class="lbl">countries</div></div>
+    <div class="fact"><div class="num">{{ facts.regions }}</div><div class="lbl">NUTS 2 regions</div></div>
+    <div class="fact"><div class="num">{{ facts.first_year }}–{{ facts.last_year }}</div><div class="lbl">monthly data</div></div>
+    <div class="fact"><div class="num">4</div><div class="lbl">ML models compared</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>About this project</h2>
+  <p class="muted">Built as the final project of the course <em>Programming and Data Systems</em> at the Lisbon School of Economics &amp; Management (ISEG, Universidade de Lisboa) by Christian Wagner, Jan Hrušák, Arno Vanheule and Siyuan Yuan. Python, Flask, pandas, scikit-learn, Leaflet and Plotly. Data: Eurostat dataset <a href="https://ec.europa.eu/eurostat/databrowser/view/tour_ce_omn12/default/table" target="_blank" rel="noopener">tour_ce_omn12</a>.</p>
+</section>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Housing Price Model · Tourism Insights{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Housing Price Model</h1>
+  <p>Short-term rentals are often blamed for rising housing costs. This page tests a narrower question: <strong>can short-term rental activity, together with a few socio-economic indicators, predict how much house prices in a country change from one year to the next?</strong></p>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h2>Data</h2>
+    <p class="muted">143 observations – one per country and year (about 25 EU countries, 2018–2023).</p>
+    <ul class="muted" style="padding-left:18px;margin:0">
+      <li><strong>Target:</strong> yearly change of the house price index (in %)</li>
+      <li><strong>Tourism features:</strong> stays, nights rented and guest nights, for domestic and foreign guests</li>
+      <li><strong>Socio-economic features:</strong> share of population with tertiary education, share of households with internet access</li>
+      <li><strong>Controls:</strong> year and country indicators; all features standardised</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Method</h2>
+    <ol class="steps muted">
+      <li>Split the data: 80 % for training, 20 % held back as an unseen test set (stratified by the target).</li>
+      <li>Compare four models on the training data with 5-fold cross-validation: Linear Regression, Lasso, Random Forest and Support Vector Regression.</li>
+      <li>Pick the model with the best average R², tune it and evaluate it once on the test set.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="card section">
+  <div class="controls">
+    <div class="control">
+      <span class="label">Cross-validation</span>
+      <div class="segmented" id="cv">
+        <button data-value="simple" class="active">Simple</button>
+        <button data-value="nested">Nested</button>
+      </div>
+    </div>
+    <button class="btn" id="run">Run models</button>
+    <span id="running" class="muted small hidden"><span class="spinner"></span>&nbsp; Training models … nested cross-validation takes a few seconds longer.</span>
+  </div>
+  <div class="hint small"><strong>Simple:</strong> each model with default settings. <strong>Nested:</strong> settings (e.g. tree depth) are tuned inside every fold – slower, but a fairer comparison because tuning never sees the fold it is scored on.</div>
+</div>
+
+<div id="results" class="hidden">
+  <section class="section card">
+    <div class="section-head"><h2>1 · Model comparison</h2><span class="muted small" id="cv-label"></span></div>
+    <p class="muted small"><strong>R²</strong> shows how much of the variation in price changes a model explains: 1 is perfect, 0 is no better than always predicting the average, and <strong>below 0 means worse than the average</strong>. <strong>MAE</strong> is the average prediction error in percentage points – lower is better.</p>
+    <div class="grid-2">
+      <div id="chart-r2" class="chart"></div>
+      <div id="chart-mae" class="chart"></div>
+    </div>
+    <table class="data" id="table"></table>
+  </section>
+
+  <section class="section card">
+    <h2>2 · Best model on unseen data</h2>
+    <p class="muted small" id="test-intro"></p>
+    <div class="kpis" id="test-kpis"></div>
+    <div class="hint" id="verdict"></div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script src="{{ asset('js/model.js') }}"></script>
+{% endblock %}

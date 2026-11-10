@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Country Insights · Tourism Insights{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Country Insights</h1>
+  <p>A closer look at one country: how big short-term rental tourism is, how much of it comes from abroad, when the season peaks and which regions attract guests.</p>
+</div>
+
+<div class="card">
+  <div class="controls">
+    <div class="control">
+      <label for="country">Country</label>
+      <select id="country">
+        {% for c in countries %}<option value="{{ c.code }}" {{ 'selected' if c.code == 'DE' }}>{{ c.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="control">
+      <label for="year">Year</label>
+      <select id="year">{% for y in years|reverse %}<option value="{{ y }}">{{ y }}</option>{% endfor %}</select>
+    </div>
+    <div class="control">
+      <span class="label">Regions</span>
+      <div class="segmented" id="level">
+        <button data-value="1" class="active">Large (NUTS 1)</button>
+        <button data-value="2">Small (NUTS 2)</button>
+      </div>
+    </div>
+    <div class="control">
+      <label for="indicator">Indicator for charts</label>
+      <select id="indicator">
+        {% for key, ind in indicators.items() if key != 'avg_length' %}<option value="{{ key }}" {{ 'selected' if key == 'guest_nights' }}>{{ ind.label }}</option>{% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="hint small">Large regions are e.g. German federal states (Bayern, Nordrhein-Westfalen); small regions are their subdivisions (Oberbayern, Niederbayern, …). Some small countries have only one region.</div>
+</div>
+
+<section class="section card">
+  <div class="section-head"><h2>Key figures <span class="muted" id="kpi-title"></span></h2></div>
+  <p class="muted small">The size of short-term rental tourism in the selected year, the share of foreign guests and the typical length of a stay.</p>
+  <div class="kpis" id="kpis"></div>
+</section>
+
+<section class="section card">
+  <div class="section-head"><h2>Seasonality by region</h2><span class="muted small" id="heat-sub"></span></div>
+  <p class="muted small">Each row is a region, each column a month; darker = more. Compare when domestic and foreign guests travel and which regions carry the season. Each heatmap has its own colour scale.</p>
+  <div id="no-regions" class="notice hidden">This country has only one region at this level, so there is nothing to compare. Try the other region level or another country.</div>
+  <p class="muted small" id="footnote-heat"></p>
+  <div class="grid-2" id="heatmaps">
+    <div id="heat-dom" class="chart"></div>
+    <div id="heat-for" class="chart"></div>
+  </div>
+</section>
+
+<section class="section card">
+  <div class="section-head"><h2>Top 3 regions over the year</h2><span class="muted small" id="trend-sub"></span></div>
+  <p class="muted small">Monthly development of the three largest regions. Click a region in the legend to hide or show it.</p>
+  <p class="muted small" id="footnote-trend"></p>
+  <div class="grid-2" id="trends">
+    <div id="trend-dom" class="chart"></div>
+    <div id="trend-for" class="chart"></div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script src="{{ asset('js/country.js') }}"></script>
+{% endblock %}

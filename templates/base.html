@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Tourism Insights{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {% block head %}{% endblock %}
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="{{ url_for('home') }}"><span class="brand-dot"></span><span class="text">Tourism Insights</span></a>
+      <div class="nav-links">
+        <a href="{{ url_for('explore') }}" class="{{ 'active' if active == 'explore' }}">Explore</a>
+        <a href="{{ url_for('country') }}" class="{{ 'active' if active == 'country' }}">Country Insights</a>
+        <a href="{{ url_for('model') }}" class="{{ 'active' if active == 'model' }}">Housing Price Model</a>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="inner">
+      <span>Data: Eurostat (tour_ce_omn12), {{ years[0] }}–{{ years[-1] }} · short-stay accommodation booked via Airbnb, Booking.com, Expedia Group and Tripadvisor</span>
+      <span>University project · ISEG Lisbon</span>
+    </div>
+  </footer>
+  <script src="{{ asset('js/format.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
