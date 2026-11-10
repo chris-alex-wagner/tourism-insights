@@ -6,11 +6,18 @@ Tourism Insights is an interactive Flask web app built on Eurostat data about st
 
 > University project – *Programming and Data Systems*, Lisbon School of Economics & Management (ISEG), Universidade de Lisboa. Team: Christian Wagner, Jan Hrušák, Arno Vanheule, Siyuan Yuan.
 
-<!-- Screenshots: add images to docs/screenshots/ and uncomment
-![Explore](docs/screenshots/explore.png)
-![Country Insights](docs/screenshots/country.png)
-![Housing Price Model](docs/screenshots/model.png)
--->
+  ![Explore: map and Top 10 ranking](docs/screenshots/explore.png)
+
+  <table>
+    <tr>
+      <td><img src="docs/screenshots/country.png" alt="Country Insights"></td>
+      <td><img src="docs/screenshots/model.png" alt="Housing Price Model"></td>
+    </tr>
+    <tr>
+      <td align="center"><em>Country Insights</em></td>
+      <td align="center"><em>Housing Price Model</em></td>
+    </tr>
+  </table>
 
 ## Features
 
